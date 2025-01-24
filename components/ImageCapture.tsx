@@ -4,7 +4,7 @@ import { useState, useRef } from "react"
 import Webcam from "react-webcam"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Camera, Download, RefreshCw, User, Phone, Mail, Briefcase, MapPin } from "lucide-react"
+import { Camera, Download, RefreshCw, User, Phone, Mail, Briefcase, MapPin, LucideIcon } from "lucide-react"
 import { toast } from "sonner"
 import Image from "next/image"
 
@@ -139,7 +139,7 @@ export default function ImageCapture() {
   )
 }
 
-function DetailItem({ icon: Icon, value }: { icon: any; value?: string }) {
+function DetailItem({ icon: Icon, value }: { icon: LucideIcon; value?: string }) {
   if (!value) return null
   return (
     <div className="flex items-center">
