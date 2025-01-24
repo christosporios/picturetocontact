@@ -4,7 +4,7 @@ import { useState, useRef } from "react"
 import Webcam from "react-webcam"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Camera, Download, RefreshCw, User, Phone, Mail, Briefcase, MapPin, LucideIcon, FlipHorizontal } from "lucide-react"
+import { Camera, Download, RefreshCw, User, Phone, Mail, Briefcase, MapPin, LucideIcon, RotateCw } from "lucide-react"
 import { toast } from "sonner"
 import Image from "next/image"
 
@@ -96,10 +96,10 @@ export default function ImageCapture() {
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
                 <Button
                   onClick={toggleCamera}
-                  className="px-6 py-2 bg-white text-black hover:bg-gray-200"
+                  className="px-6 py-2 bg-white text-black hover:bg-gray-200 md:hidden"
                   variant="outline"
                 >
-                  <FlipHorizontal className="h-4 w-4" />
+                  <RotateCw className="h-4 w-4" />
                 </Button>
                 <Button
                   onClick={captureImage}
@@ -130,7 +130,9 @@ export default function ImageCapture() {
                       <DetailItem icon={User} value={contactDetails.name} />
                       <DetailItem icon={Phone} value={contactDetails.phone} />
                       <DetailItem icon={Mail} value={contactDetails.email} />
-                      <DetailItem icon={Briefcase} value={`${contactDetails.jobTitle} at ${contactDetails.company}`} />
+                      {contactDetails.jobTitle && contactDetails.company && (
+                        <DetailItem icon={Briefcase} value={`${contactDetails.jobTitle} at ${contactDetails.company}`} />
+                      )}
                       <DetailItem icon={MapPin} value={contactDetails.address} />
                     </div>
                     <div className="flex gap-2 pt-2">
