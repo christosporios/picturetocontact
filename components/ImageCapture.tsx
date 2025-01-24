@@ -4,7 +4,7 @@ import { useState, useRef } from "react"
 import Webcam from "react-webcam"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Camera, Download, RefreshCw, User, Phone, Mail, Briefcase, MapPin, LucideIcon } from "lucide-react"
+import { Camera, Download, RefreshCw, User, Phone, Mail, Briefcase, MapPin, LucideIcon, FlipHorizontal } from "lucide-react"
 import { toast } from "sonner"
 import Image from "next/image"
 
@@ -23,6 +23,7 @@ export default function ImageCapture() {
   const [vCardUrl, setVCardUrl] = useState<string | null>(null)
   const [contactDetails, setContactDetails] = useState<ContactDetails | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("environment")
   const webcamRef = useRef<Webcam>(null)
 
   const captureImage = () => {
@@ -73,6 +74,10 @@ export default function ImageCapture() {
     setContactDetails(null)
   }
 
+  const toggleCamera = () => {
+    setFacingMode(prevMode => prevMode === "user" ? "environment" : "user")
+  }
+
   return (
     <div className="screen flex items-center justify-center bg-gray-100 p-4">
       <Card className="w-full max-w-md">
@@ -84,14 +89,26 @@ export default function ImageCapture() {
                 audio={false}
                 screenshotFormat="image/jpeg"
                 className="w-full aspect-[3/4] object-cover rounded-t-lg"
+                videoConstraints={{
+                  facingMode: facingMode
+                }}
               />
-              <Button
-                onClick={captureImage}
-                className="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-6 py-2 bg-white text-black hover:bg-gray-200"
-                variant="outline"
-              >
-                <Camera className="mr-2 h-4 w-4" /> Capture
-              </Button>
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+                <Button
+                  onClick={toggleCamera}
+                  className="px-6 py-2 bg-white text-black hover:bg-gray-200"
+                  variant="outline"
+                >
+                  <FlipHorizontal className="h-4 w-4" />
+                </Button>
+                <Button
+                  onClick={captureImage}
+                  className="px-6 py-2 bg-white text-black hover:bg-gray-200"
+                  variant="outline"
+                >
+                  <Camera className="mr-2 h-4 w-4" /> Capture
+                </Button>
+              </div>
             </div>
           ) : (
             <div className="space-y-4">
@@ -148,4 +165,3 @@ function DetailItem({ icon: Icon, value }: { icon: LucideIcon; value?: string })
     </div>
   )
 }
-
